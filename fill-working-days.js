@@ -29,7 +29,7 @@ async function fillWorkingDays() {
     const validItems = [];
     const items = document.querySelectorAll(SELECTORS.TABLE_ITEM)
 
-    items.forEach(async (item, index) => {
+    items.forEach((item, index) => {
       const filledHoursEls = item.querySelectorAll(SELECTORS.TABLE_ITEM_HOURS);
       const weekendInfoEl = item.querySelector(SELECTORS.TABLE_ITEM_WEEKEND);
 
@@ -55,7 +55,7 @@ async function fillWorkingDays() {
     return currentWorkingDay.innerText
   }, index, SELECTORS)
 
-  const validWorkingDaysIndex = getWorkingDaysIndexes()
+  const validWorkingDaysIndex = await getWorkingDaysIndexes()
 
   for (const index of validWorkingDaysIndex) {
     const currentWorkingDay = await getCurrentWorkingDay(index)
