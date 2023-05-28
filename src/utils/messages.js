@@ -4,20 +4,16 @@ const colors = {
   green: '\x1b[32m',
 }
 
-function error(message) {
+export function error(message) {
   console.log(colors.red, message, colors.reset)
 }
 
-function success(message) {
+export function success(message) {
   console.log(colors.green, message, colors.reset)
 }
 
-function info(message) {
+export function info(message) {
   console.log(colors.reset, message)
 }
 
-const message = { error, success, info }
-
-module.exports = {
-  message
-}
+export const message = { error, success, info }

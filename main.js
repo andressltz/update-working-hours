@@ -1,10 +1,25 @@
-require("dotenv").config();
-const { message } = require("./utils");
+import dotenv from 'dotenv';
+import select, { Separator } from '@inquirer/select';
 
-const { fillWorkingDays } = require("./fill-working-days");
+import { MONTH_OPTIONS } from './src/constants/index.js';
+import { initBrowser } from './src/utils/index.js';
+import { 
+  fillWorkingDays,  
+  gotoMainPage, 
+} from './src/lib/index.js'
 
-(async () => {
-  await fillWorkingDays();
+dotenv.config();
 
-  message.success('\n All working days filled successfully!')
-})();
+const answer = await select({
+  message: 'Select a mounth to fill working hours:',
+    choices: [...MONTH_OPTIONS, new Separator()],
+});
+
+const { browser, page } = await initBrowser();
+
+await gotoMainPage({ page });
+
+// TODO: Implement go to chosen month
+// await gotoCurrentMonth({ page, answer });
+
+await fillWorkingDays({ browser, page, answer });
