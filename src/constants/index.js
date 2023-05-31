@@ -12,6 +12,7 @@ export const SELECTORS = {
   INPUT_TIME: "#time",
   INPUT_ACTIVITY: "#activity",
   SUBMIT_BUTTON: ".activities-registry__container__submit-button-container .button",
+  PREVIOUS_MONTH_BUTTON: ".month-header__line__change-page-button"
 }
 
 export const WAIT_TIMES = {
@@ -25,52 +26,12 @@ export const WAIT_TYPES = {
 
 export const MONTH_OPTIONS = [
   {
-    name: 'Janeiro ',
-    value: 'janeiro',
+    name: 'Atual ',
+    value: 'current',
   },
   {
-    name: 'Fevereiro ',
-    value: 'fevereiro',
+    name: 'Anterior ',
+    value: 'previous',
   },
-  {
-    name: 'Março',
-    value: 'março',
-  },
-  {
-    name: 'Abril',
-    value: 'abril ',
-  },
-  {
-    name: 'Maio',
-    value: 'maio',
-  },
-  {
-    name: 'Junho',
-    value: 'junho',
-  },
-  {
-    name: 'Julho',
-    value: 'july',
-  },
-  {
-    name: 'Agosto',
-    value: 'august',
-  },
-  {
-    name: 'Setembro',
-    value: 'september',
-  },
-  {
-    name: 'Outubro',
-    value: 'october',
-  },
-  {
-    name: 'Novembro',
-    value: 'november',
-  },
-  {
-    name: 'Dezembro',
-    value: 'december',
-  }, 
 ]
 

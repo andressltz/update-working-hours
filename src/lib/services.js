@@ -1,31 +1,45 @@
 import { SELECTORS } from '../constants/index.js'
 
-export const getWorkingDaysIndexes = async ({ page }) => await page.evaluate((SELECTORS) => {
-  const validItems = [];
-  const items = document.querySelectorAll(SELECTORS.TABLE_ITEM)
+export async function getWorkingDaysIndexes({ page }) {
+  await page.waitForSelector(
+    SELECTORS.TABLE_ITEM,
+  );
 
-  items.forEach((item, index) => {
-    const filledHoursEls = item.querySelectorAll(SELECTORS.TABLE_ITEM_HOURS);
-    const weekendInfoEl = item.querySelector(SELECTORS.TABLE_ITEM_WEEKEND);
+  const validItems = [];
+  const items = await page.$$(SELECTORS.TABLE_ITEM)
+
+  for (const [index, item] of items.entries()) {
+    const filledHoursEls = await item.$$(SELECTORS.TABLE_ITEM_HOURS);
+    const weekendInfoEl = await item.$(SELECTORS.TABLE_ITEM_WEEKEND);
 
     const hasValidContent = filledHoursEls && filledHoursEls.length > 0;
 
     if (hasValidContent && !weekendInfoEl) {
       validItems.push(index)
     }
-  })
+  }
 
   return validItems
-}, SELECTORS)
+}
 
-export const getHoursWithoutActivity = async ({ page }) => await page.evaluate((SELECTORS) => {
-  const hoursWithoutActivityText = document.querySelector(SELECTORS.TIME_WITHOUT_ACTIVITY)
+export async function getHoursWithoutActivity({ page }) {
+   const hoursWithoutActivityEl = await page.waitForSelector(
+    SELECTORS.TIME_WITHOUT_ACTIVITY,
+  );
 
-  return hoursWithoutActivityText?.innerText?.replace('Horas sem atividade ', '') || '00:00'
-}, SELECTORS)
+  const hoursWithoutActivityText = await hoursWithoutActivityEl?.evaluate(el => el.textContent);
 
-export const getCurrentWorkingDay = async (index) => await page.evaluate((index, SELECTORS) => {
-  const currentWorkingDay = document.querySelectorAll(SELECTORS.TABLE_ITEM_DATE)[index]
+  return hoursWithoutActivityText.replace('Horas sem atividade: ', '')
+}
 
-  return currentWorkingDay.innerText
-}, index, SELECTORS)
+export async function getCurrentWorkingDay({ page, index }) {
+  await page.waitForSelector(
+    SELECTORS.TABLE_ITEM_DATE,
+  )
+
+  const currentWorkingDayEls = await page.$$(SELECTORS.TABLE_ITEM_DATE);
+
+  const currentWorkingDayText = await currentWorkingDayEls[index].evaluate(el => el.textContent);
+
+  return currentWorkingDayText
+}

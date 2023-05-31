@@ -2,9 +2,9 @@ import { message, wait } from '../utils/index.js';
 
 import { ACTIVITY_TYPE, SELECTORS, WAIT_TIMES, WAIT_TYPES } from "../constants/index.js"
 
-import { getWorkingDaysIndexes } from "./services.js"
+import { getWorkingDaysIndexes, getHoursWithoutActivity, getCurrentWorkingDay } from "./services.js"
 
-export async function fillWorkingDays({ browser, page, answer}) {
+export async function fillWorkingDays({ page }) {
   await page.waitForSelector(
     SELECTORS.TABLE_ITEM,
   );
@@ -12,7 +12,7 @@ export async function fillWorkingDays({ browser, page, answer}) {
   const validWorkingDaysIndex = await getWorkingDaysIndexes({ page })
 
   for (const index of validWorkingDaysIndex) {
-    const currentWorkingDay = await getCurrentWorkingDay(index)
+    const currentWorkingDay = await getCurrentWorkingDay({ page, index })
 
     message.info(`Filling: ${currentWorkingDay}`)
 
@@ -32,7 +32,7 @@ export async function fillWorkingDays({ browser, page, answer}) {
       const option = await page.$(SELECTORS.DROPDOWN_OPTION)
       await option.click();
 
-      const hoursWithoutActivity = await getHoursWithoutActivity()
+      const hoursWithoutActivity = await getHoursWithoutActivity({ page })
 
       if (hoursWithoutActivity === '00:00') {
         await page.goBack({
@@ -64,7 +64,5 @@ export async function fillWorkingDays({ browser, page, answer}) {
       message.error(error)
     }
   }
-
-  await browser.close()
 }
 

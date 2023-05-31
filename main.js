@@ -2,24 +2,38 @@ import dotenv from 'dotenv';
 import select, { Separator } from '@inquirer/select';
 
 import { MONTH_OPTIONS } from './src/constants/index.js';
-import { initBrowser } from './src/utils/index.js';
+import { initBrowser, wait } from './src/utils/index.js';
 import { 
-  fillWorkingDays,  
+  gotoPreviousMonth,  
   gotoMainPage, 
+  fillWorkingDays,
 } from './src/lib/index.js'
 
 dotenv.config();
 
-const answer = await select({
-  message: 'Select a mounth to fill working hours:',
-    choices: [...MONTH_OPTIONS, new Separator()],
-});
+async function init() {
+  const selectedMonth = await select({
+    message: 'Select a mounth to fill working hours:',
+      choices: [...MONTH_OPTIONS, new Separator()],
+  });
 
-const { browser, page } = await initBrowser();
+  const { browser, page } = await initBrowser();
 
-await gotoMainPage({ page });
+  await gotoMainPage({ page });
 
-// TODO: Implement go to chosen month
-// await gotoCurrentMonth({ page, answer });
+  if (selectedMonth === 'previous') {
+    await gotoPreviousMonth({ page });
+  }
 
-await fillWorkingDays({ browser, page, answer });
+  await fillWorkingDays({ browser, page });
+
+  await page.evaluate(() => {
+    localStorage.setItem('@access_selectedMonth', '');
+  });
+
+  await browser.close()
+}
+
+await init();
+
+
