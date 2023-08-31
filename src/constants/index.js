@@ -1,6 +1,6 @@
-const ACTIVITY_TYPE = 'Desenvolvimento'
+export const ACTIVITY_TYPE = 'Desenvolvimento'
 
-const SELECTORS = {
+export const SELECTORS = {
   TABLE_ITEM: ".line-wrapper__content",
   TABLE_ITEM_WEEKEND: ".message-info--non-working-day",
   TABLE_ITEM_HOURS: ".shift-hours__data",
@@ -12,20 +12,26 @@ const SELECTORS = {
   INPUT_TIME: "#time",
   INPUT_ACTIVITY: "#activity",
   SUBMIT_BUTTON: ".activities-registry__container__submit-button-container .button",
+  PREVIOUS_MONTH_BUTTON: ".month-header__line__change-page-button"
 }
 
-const WAIT_TIMES = {
+export const WAIT_TIMES = {
   SHORT: 500,
   LONG: 2000,
 }
 
-const WAIT_TYPES = {
+export const WAIT_TYPES = {
   DOMCONTENTLOADED: "domcontentloaded",
 }
 
-module.exports = {
-  ACTIVITY_TYPE,
-  SELECTORS,
-  WAIT_TIMES,
-  WAIT_TYPES,
-}
+export const MONTH_OPTIONS = [
+  {
+    name: 'Atual ',
+    value: 'current',
+  },
+  {
+    name: 'Anterior ',
+    value: 'previous',
+  },
+]
+
