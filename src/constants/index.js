@@ -1,4 +1,4 @@
-export const ACTIVITY_TYPE = 'Desenvolvimento'
+export const ACTIVITY_TYPE = 'Tarefas diarias de desenvolvimento de software.'
 
 export const SELECTORS = {
   TABLE_ITEM: ".line-wrapper__content",
@@ -9,7 +9,7 @@ export const SELECTORS = {
   DROPDOWN: ".activities-registry__container__activityType .select-container .select",
   DROPDOWN_OPTION: 'div[id^="react-select-"][id$="-option-8"]',
   TIME_WITHOUT_ACTIVITY: ".worked-time-without-activity",
-  INPUT_TIME: "#time",
+  INPUT_TIME: ".input-new-container__input",
   INPUT_ACTIVITY: "#activity",
   SUBMIT_BUTTON: ".activities-registry__container__submit-button-container .button",
   PREVIOUS_MONTH_BUTTON: ".month-header__line__change-page-button"
